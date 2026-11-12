@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Avenro — Payments to confirm</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px/1.5 Jost,Helvetica,Arial,sans-serif;background:#f2efe8;color:#0e0e0e}
+main{max-width:860px;margin:0 auto;padding:32px 20px 80px}h1{font:400 34px Georgia,serif;margin:0 0 6px}p.sub{color:#6b6359;margin:0 0 24px}
+input,button{font:inherit}input{border:1px solid #d3cdc2;background:transparent;padding:0 14px;min-height:44px;min-width:240px}
+button{border:0;background:#0e0e0e;color:#fff;min-height:44px;padding:0 20px;cursor:pointer}button.ghost{background:none;color:#0e0e0e;border:1px solid #0e0e0e}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}.card{border:1px solid #d3cdc2;padding:16px;margin-bottom:14px;background:#fff8}
+.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#6b6359}
+.proof{margin:10px 0;padding:10px 12px;background:#0e0e0e0d;font-size:13px}.acts{display:flex;gap:8px;margin-top:12px}#msg{color:#9b2c2c;min-height:20px}
+</style></head><body><main>
+<h1>Payments to confirm</h1><p class="sub">Vodafone Cash / InstaPay transfers. Check the money arrived in your wallet or bank app, then confirm. Rejecting releases the stock.</p>
+<div class="row"><input id="tok" type="password" placeholder="Admin token (ADMIN_TOKEN in .env)" autocomplete="off"><button id="go">Load orders</button></div>
+<div id="msg" role="alert"></div><div id="list"></div></main>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let tok='';try{tok=sessionStorage.getItem('avenro_admin')||''}catch(e){}$('#tok').value=tok;
+async function api(path,body){const r=await fetch(path,{method:body?'POST':'GET',headers:Object.assign({'X-Admin-Token':$('#tok').value},body?{'Content-Type':'application/json'}:{}),body:body?JSON.stringify(body):undefined});
+ const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||'Request failed');return j}
+async function load(){$('#msg').textContent='';
+ try{const L=await api('/api/admin/orders');try{sessionStorage.setItem('avenro_admin',$('#tok').value)}catch(e){}
+  $('#list').innerHTML=L.length?L.map(o=>{const pr=o.payments.map(p=>{let s='';try{s=JSON.parse(p.raw||'{}').sender||''}catch(e){}return `<div class="proof"><b>${esc(p.provider.replace('_manual',''))}</b> · reference <b>${esc(p.txn)}</b> · from ${esc(s)} · ${esc(p.status)}</div>`}).join('')||'<div class="proof">No transfer details submitted yet.</div>';
+   const open=o.status==='pending_payment';
+   return `<div class="card"><div class="top"><strong>${esc(o.reference)}</strong><span class="tag">${esc(o.payment_method)} · ${esc(o.payment_status)} · ${esc(o.status)}</span></div>
+   <div>${esc(o.total)} ${esc(o.currency)} · ${esc(o.name)} · ${esc(o.phone)} · ${esc(o.email)}</div><div class="tag">${esc(o.address)}, ${esc(o.city)}</div>
+   <div style="margin-top:8px">${o.items.map(i=>esc(i.name)+' · '+esc(i.size)+' × '+i.quantity).join('<br>')}</div>${pr}
+   ${open?`<div class="acts"><button data-ok="${esc(o.reference)}">Confirm payment</button><button class="ghost" data-no="${esc(o.reference)}">Reject</button></div>`:''}</div>`}).join(''):'<p>Nothing waiting.</p>'}
+ catch(e){$('#msg').textContent=e.message}}
+$('#go').onclick=load;
+$('#list').onclick=async e=>{const b=e.target.closest('[data-ok],[data-no]');if(!b)return;const ok=!!b.dataset.ok;
+ if(!confirm((ok?'Confirm that the money for ':'Reject and release stock for ')+(b.dataset.ok||b.dataset.no)+'?'))return;
+ try{await api('/api/admin/orders/'+(ok?'confirm':'reject'),{reference:b.dataset.ok||b.dataset.no});load()}catch(x){$('#msg').textContent=x.message}};
+if(tok)load();
+</script></body></html>

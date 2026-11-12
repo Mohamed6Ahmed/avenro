@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f2efe8">
+<title>Your account — Avenro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--text:#0E0E0E;--muted:#6b6359;--line:#d3cdc2;--bone:#f2efe8;--serif:"Cormorant Garamond",Georgia,serif;--err:#9b2c2c;--ok:#2f6b3f}
+html,body{margin:0;font-family:Jost,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bone)}
+button,input,select{font:inherit;color:inherit}a{color:inherit}
+[hidden]{display:none!important}
+.top{height:76px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ddd7cc}
+.brand{display:inline-flex;align-items:center;gap:14px;font:300 19px Jost,sans-serif;letter-spacing:.46em;text-transform:uppercase;text-decoration:none}
+.top a.back{font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;padding:12px 0}.top a.back:hover{text-decoration:underline;text-underline-offset:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 24px 90px}
+.hello{display:flex;align-items:center;gap:20px;margin-bottom:32px;flex-wrap:wrap}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--text);color:#fff;display:grid;place-items:center;font:400 26px var(--serif);flex:none}
+.hello h1{font:400 38px var(--serif);margin:0;line-height:1.1}.hello p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
+.side{display:flex;flex-direction:column;border:1px solid var(--line);position:sticky;top:16px}
+.side a,.side button{display:block;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:15px 18px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.side>*:last-child{border-bottom:0}.side a:hover,.side button:hover{background:#0e0e0e0a}.side a[aria-current=true]{background:var(--text);color:#fff}
+h2{font:400 28px var(--serif);margin:0 0 18px}
+.card{border:1px solid var(--line);margin-bottom:18px;background:#fff6}
+.ord-head{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:14px 18px;background:#0e0e0e08;border-bottom:1px solid var(--line);font-size:12px}
+.ord-head span{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.ord-body{padding:6px 18px 14px}.status{font:500 14px Jost;margin:12px 0 4px}.status.paid{color:var(--ok)}.status.bad{color:var(--err)}
+.line{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}.line:first-of-type{border-top:0}
+.line img{width:64px;height:80px;object-fit:contain;background:#fff}.line b{font-weight:500;font-size:13px}.line small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.btn{border:0;background:var(--text);color:#fff;min-height:44px;padding:0 22px;cursor:pointer;font:500 12px Jost;letter-spacing:.06em}.btn:disabled{opacity:.4}
+.btn.ghost{background:none;color:var(--text);border:1px solid var(--text)}.btn.sm{min-height:36px;padding:0 14px;font-size:11px}
+.fld{display:flex;flex-direction:column;gap:6px;margin:0 0 14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.fld input{border:1px solid var(--line);background:transparent;padding:0 14px;min-height:44px;font:13px Jost;letter-spacing:0;text-transform:none;color:var(--text);width:100%}
+.fld input:focus{outline:2px solid var(--text);outline-offset:-1px}.fld input[readonly]{opacity:.6}
+.form{max-width:460px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.msg{min-height:20px;font-size:12px;margin:4px 0 10px;color:var(--err)}.msg.ok{color:var(--ok)}
+.addr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.addr{border:1px solid var(--line);padding:16px;font-size:13px;line-height:1.55;display:flex;flex-direction:column;gap:2px}.addr.def{border-color:var(--text)}
+.addr .tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}.addr .acts{display:flex;gap:8px;margin-top:auto;padding-top:12px;flex-wrap:wrap}
+.add{border:1px dashed var(--line);background:none;min-height:150px;font-size:13px;cursor:pointer}.add:hover{border-color:var(--text)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-top:1px solid var(--line);font-size:13px;flex-wrap:wrap}.row:first-of-type{border-top:0}.row small{color:var(--muted)}
+dialog{border:1px solid #d9d9d9;background:var(--bone);color:var(--text);padding:24px;width:min(480px,100vw - 32px);max-height:90dvh}dialog::backdrop{background:#0005;backdrop-filter:blur(4px)}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.dh h3{font:400 24px var(--serif);margin:0}.dh button{background:none;border:0;font-size:28px;cursor:pointer;width:44px;height:44px}
+.pay-box{display:grid;gap:14px;border:1px solid var(--line);padding:16px;margin:14px 0}.pay-box div{display:flex;flex-direction:column;gap:4px}.pay-box strong{font:400 22px var(--serif);word-break:break-all}.pay-box small{color:var(--muted);font-size:12px}
+.lab{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.empty{color:var(--muted);font-size:14px;padding:30px 0}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:12px 20px;font-size:12px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:99}#toast.on{opacity:1}
+@media(max-width:800px){.top{padding:0 20px}.layout{grid-template-columns:1fr;gap:24px}.side{position:static;flex-direction:row;overflow-x:auto}.side>*{flex:none;border-bottom:0!important;border-right:1px solid var(--line)}
+.ord-head{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}.hello h1{font-size:30px}}
+</style></head><body>
+<header class="top"><a class="brand" href="/"><svg viewBox="0 0 150 175" width="20" height="24" fill="none" stroke="currentColor" stroke-width="8"><path d="M0 162L75 4l75 158"/><path d="M33 92l42 80 42-80"/></svg>Avenro</a><a class="back" href="/">← Back to shop</a></header>
+<div class="wrap" id="app"><p class="empty">Loading…</p></div>
+<dialog id="dlg"><div id="dlg-body"></div></dialog><div id="toast" role="status" aria-live="polite"></div>
+<script>
+(async()=>{
+const $=(s,e=document)=>e.querySelector(s),$$=(s,e=document)=>[...e.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const api=(u,d)=>fetch(u,d===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(async r=>{const j=await r.json().catch(()=>({}));if(!r.ok){const e=Error(j.error||'Request failed');e.status=r.status;throw e}return j});
+let tt;const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),3000)};
+let CFG={currency:'EGP',methods:[]},ME=null,GOOGLE=false,ORD=[],ADDR=[];
+const money=(n,c=CFG.currency)=>{try{return new Intl.NumberFormat('en-US',{style:'currency',currency:c}).format(n)}catch(e){return Number(n).toFixed(2)+' '+c}};
+const when=s=>new Date(String(s).replace(' ','T')+'Z').toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+try{CFG=await api('/api/config')}catch(e){}
+try{const r=await api('/api/auth/me');ME=r.user;GOOGLE=r.google}catch(e){}
+const app=$('#app');
+if(!ME){app.innerHTML='<h2>Your account</h2><p class="empty">Please sign in to see your orders and details.</p><a class="btn" style="display:inline-flex;align-items:center;text-decoration:none" href="/?signin=1">Sign in</a>';return}
+const dlg=$('#dlg');dlg.addEventListener('click',e=>{const r=dlg.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom||e.target.closest('[data-close]'))dlg.close()});
+const load=async()=>{[ORD,ADDR]=await Promise.all([api('/api/orders/mine').catch(()=>[]),api('/api/account/addresses').catch(()=>[])])};
+await load();
+const TABS=[['orders','Your orders'],['profile','Profile'],['addresses','Addresses'],['security','Login & security']];
+const label=o=>o.status==='cancelled'?['Cancelled','bad']:o.payment_status==='refunded'?['Refunded','bad']:o.payment_status==='verifying'?['Checking your transfer','']:o.status==='pending_payment'?['Awaiting payment','']:o.payment_status==='paid'?['Paid · being prepared','paid']:o.payment_method==='cod'?['Confirmed · pay on delivery','paid']:['Confirmed','paid'];
+const manual=k=>(CFG.methods||[]).some(m=>m.key===k&&m.kind==='manual');
+const mname=k=>((CFG.methods||[]).find(m=>m.key===k)||{}).label||k;
+function shell(){
+ const spent=ORD.filter(o=>o.payment_status==='paid'||(o.payment_method==='cod'&&o.status!=='cancelled')).reduce((s,o)=>s+o.total,0);
+ app.innerHTML=`<div class="hello"><div class="avatar">${esc(ME.name.trim()[0]||'A').toUpperCase()}</div><div><h1>Hello, ${esc(ME.name.trim().split(' ')[0])}</h1><p>${esc(ME.email)} · Member since ${esc(when(ME.created_at))} · ${ORD.length} order${ORD.length===1?'':'s'} · ${money(spent)} spent</p></div></div>
+ <div class="layout"><nav class="side" aria-label="Account">${TABS.map(([k,t])=>`<a href="#${k}" data-tab="${k}">${t}</a>`).join('')}<button id="out" type="button">Sign out</button></nav><section id="pane" aria-live="polite"></section></div>`;
+ $('#out').onclick=async()=>{try{await api('/api/auth/logout',{})}catch(e){}location.href='/'}}
+function pane(){const k=(location.hash||'#orders').slice(1),t=TABS.find(x=>x[0]===k)?k:'orders';
+ $$('.side [data-tab]').forEach(a=>a.setAttribute('aria-current',a.dataset.tab===t));const p=$('#pane');({orders,profile,addresses,security})[t](p)}
+function orders(p){p.innerHTML='<h2>Your orders</h2>'+(ORD.length?ORD.map(o=>{const [st,cls]=label(o);return `<article class="card"><div class="ord-head"><div><span>Order placed</span>${esc(when(o.created_at))}</div><div><span>Total</span>${esc(money(o.total,o.currency))}</div><div><span>Ship to</span>${esc(o.ship&&o.ship.name||'—')}</div><div><span>Order #</span>${esc(o.reference)}</div></div>
+ <div class="ord-body"><p class="status ${cls}">${esc(st)}</p><p class="lab" style="margin:0 0 6px">${esc(mname(o.payment_method))}${o.ship&&o.ship.address?' · '+esc(o.ship.address+', '+o.ship.city):''}</p>
+ ${o.items.map(i=>`<div class="line"><img src="${esc(i.image||'')}" alt=""><div><b>${esc(i.name)}</b><small>Size ${esc(i.size)} · Qty ${i.quantity}</small></div><span>${esc(money(i.unit_price*i.quantity,o.currency))}</span></div>`).join('')}
+ ${o.status==='pending_payment'&&o.payment_status!=='verifying'&&manual(o.payment_method)?`<button class="btn sm" data-pay="${esc(o.reference)}">How to pay</button>`:''}</div></article>`}).join(''):'<p class="empty">You have no orders yet. <a href="/#shop">Start shopping</a></p>');
+ $$('[data-pay]',p).forEach(b=>b.onclick=()=>showPay(ORD.find(o=>o.reference===b.dataset.pay)))}
+function profile(p){p.innerHTML=`<h2>Profile</h2><form class="form" id="pf" novalidate><label class="fld">Full name<input name="name" value="${esc(ME.name)}" required maxlength="80" autocomplete="name"></label>
+ <label class="fld">Phone<input name="phone" type="tel" value="${esc(ME.phone||'')}" maxlength="20" autocomplete="tel"></label><label class="fld">Email<input value="${esc(ME.email)}" readonly></label>
+ <div class="msg" id="pm" role="alert"></div><button class="btn" type="submit">Save changes</button></form>`;
+ $('#pf').onsubmit=async e=>{e.preventDefault();const m=$('#pm'),b=$('.btn',e.target);m.className='msg';m.textContent='';b.disabled=true;
+  try{const r=await api('/api/account/profile',Object.fromEntries(new FormData(e.target)));ME=Object.assign(ME,r.user);shell();pane();toast('Profile saved')}catch(x){m.textContent=x.message;b.disabled=false}}}
+function addrForm(a){a=a||{};dlg.querySelector('#dlg-body').innerHTML=`<div class="dh"><h3>${a.id?'Edit address':'Add address'}</h3><button data-close aria-label="Close">×</button></div>
+ <form id="af" novalidate><label class="fld">Label (Home, Work…)<input name="label" maxlength="30" value="${esc(a.label||'')}"></label><label class="fld">Full name<input name="name" required maxlength="80" value="${esc(a.name||ME.name)}"></label>
+ <label class="fld">Phone<input name="phone" type="tel" required maxlength="20" value="${esc(a.phone||ME.phone||'')}"></label><label class="fld">Address<input name="address" required maxlength="200" value="${esc(a.address||'')}"></label>
+ <label class="fld">City<input name="city" required maxlength="60" value="${esc(a.city||'')}"></label>
+ <label style="display:flex;gap:8px;align-items:center;font-size:13px;margin:0 0 14px"><input type="checkbox" name="is_default" ${a.is_default||!ADDR.length?'checked':''}> Make this my default address</label>
+ <div class="msg" id="am" role="alert"></div><button class="btn" style="width:100%" type="submit">Save address</button></form>`;
+ $('#af').onsubmit=async e=>{e.preventDefault();const f=Object.fromEntries(new FormData(e.target));f.is_default=!!f.is_default;if(a.id)f.id=a.id;const b=$('.btn',e.target);b.disabled=true;
+  try{await api('/api/account/addresses/save',f);await load();dlg.close();pane();toast('Address saved')}catch(x){$('#am').textContent=x.message;b.disabled=false}};
+ if(!dlg.open)dlg.showModal()}
+function addresses(p){p.innerHTML=`<h2>Addresses</h2><div class="addr-grid">${ADDR.map(a=>`<div class="addr ${a.is_default?'def':''}"><span class="tag">${a.is_default?'Default':esc(a.label||'Address')}${a.is_default&&a.label?' · '+esc(a.label):''}</span><b>${esc(a.name)}</b>${esc(a.address)}<br>${esc(a.city)}<br>${esc(a.phone)}
+ <div class="acts"><button class="btn ghost sm" data-edit="${a.id}">Edit</button>${a.is_default?'':`<button class="btn ghost sm" data-def="${a.id}">Make default</button>`}<button class="btn ghost sm" data-del="${a.id}">Delete</button></div></div>`).join('')}<button class="add" id="add-a">+ Add address</button></div>`;
+ $('#add-a').onclick=()=>addrForm();
+ $$('[data-edit]',p).forEach(b=>b.onclick=()=>addrForm(ADDR.find(a=>a.id==b.dataset.edit)));
+ $$('[data-def]',p).forEach(b=>b.onclick=async()=>{const a=ADDR.find(x=>x.id==b.dataset.def);try{await api('/api/account/addresses/save',Object.assign({},a,{is_default:true}));await load();pane()}catch(x){toast(x.message)}});
+ $$('[data-del]',p).forEach(b=>b.onclick=async()=>{if(!confirm('Delete this address?'))return;try{await api('/api/account/addresses/delete',{id:+b.dataset.del});await load();pane();toast('Address deleted')}catch(x){toast(x.message)}})}
+function security(p){p.innerHTML=`<h2>Login &amp; security</h2><div class="row"><div><b>Email</b><br><small>${esc(ME.email)}</small></div></div>
+ <div class="row"><div><b>Google</b><br><small>${GOOGLE?'Connected: you can sign in with “Continue with Google”.':'Not connected. Sign in once with “Continue with Google” using this same email to connect it.'}</small></div></div>
+ <h2 style="margin-top:28px">${ME.has_password?'Change password':'Set a password'}</h2><form class="form" id="sf" novalidate>
+ ${ME.has_password?'<label class="fld">Current password<input name="current" type="password" autocomplete="current-password" maxlength="128"></label>':'<p class="lab" style="margin:0 0 12px;text-transform:none;letter-spacing:0;font-size:12px">You signed up with Google. Set a password if you also want to sign in with your email.</p>'}
+ <label class="fld">New password (8+ characters)<input name="new" type="password" autocomplete="new-password" minlength="8" maxlength="128" required></label>
+ <div class="msg" id="sm" role="alert"></div><button class="btn" type="submit">${ME.has_password?'Update password':'Set password'}</button><p class="lab" style="text-transform:none;letter-spacing:0;font-size:12px;margin-top:10px">Other devices will be signed out.</p></form>`;
+ $('#sf').onsubmit=async e=>{e.preventDefault();const m=$('#sm'),b=$('.btn',e.target);m.className='msg';m.textContent='';b.disabled=true;
+  try{await api('/api/account/password',Object.fromEntries(new FormData(e.target)));ME.has_password=true;shell();location.hash='#security';pane();toast('Password updated')}catch(x){m.textContent=x.message;b.disabled=false}}}
+function showPay(o){const m=(CFG.methods||[]).find(x=>x.key===o.payment_method)||{},vf=m.key==='vodafone_cash';
+ $('#dlg-body').innerHTML=`<div class="dh"><h3>Complete your payment</h3><button data-close aria-label="Close">×</button></div><p style="font-size:12px;color:var(--muted)">Order <b>${esc(o.reference)}</b></p>
+ <div class="pay-box"><div><span class="lab">Send exactly</span><strong>${esc(money(o.total,o.currency))}</strong></div><div><span class="lab">${vf?'Vodafone Cash number':'InstaPay address'}</span><strong>${esc(m.account||'')}</strong>${m.holder?`<small>${esc(m.holder)}</small>`:''}</div></div>
+ <form id="prf" novalidate><label class="fld">${vf?'Number you sent from':'Your InstaPay address or phone'}<input name="sender" required maxlength="60"></label><label class="fld">Transfer reference / transaction ID<input name="txn" required maxlength="40"></label>
+ <div class="msg" id="prm" role="alert"></div><button class="btn" style="width:100%" type="submit">I have sent the money</button></form>`;
+ $('#prf').onsubmit=async e=>{e.preventDefault();const b=$('.btn',e.target);b.disabled=true;
+  try{await api('/api/orders/proof',Object.assign(Object.fromEntries(new FormData(e.target)),{reference:o.reference}));await load();dlg.close();pane();toast('Thanks. We are checking your transfer.')}catch(x){$('#prm').textContent=x.message;b.disabled=false}};
+ if(!dlg.open)dlg.showModal()}
+shell();pane();addEventListener('hashchange',pane);
+})();
+</script></body></html>
